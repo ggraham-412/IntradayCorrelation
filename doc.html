@@ -1,0 +1,65 @@
+<h2>Documentation</h2>
+
+<h4>Introduction</h4>
+
+<p>When a stock price trades directionally at the open, does it keep going?  Does the price movement retrace?  And are there regular times during the day which 
+exhibit behavior correlated with the open? This application produces graphical output which allows the user to explore an ensemble of daily price movements of a selected stock to visually look for daily patterns in stock price movements.  It
+is intended to be an exploratory tool used as a prelude to more detailed  inferential methods.</p>
+
+<p> The application uses an undocumented Google Finance API for intraday 
+prices called getprices.  There are some independently collected tidbits on this 
+API <a href="http://www.networkerror.org/component/content/article/1-technical-wootness/44-googles-undocumented-finance-api.html" target="_blank">here.</a>It is provided as an exploratory class project only. No warranty is expressed or 
+implied;  nor does this application comprise actionable investment advice.</p>
+
+<h4>Usage</h4>
+
+<p>Given the symbol of a stock trading on the NYSE or NASDAQ, the application 
+will sample daily price movements at configurable bar intervals (5, 15, or 30 minutes) and plot price and volume profiles overlaid from up to 28 previous trading days. (Note: "bar" is a common term for financial time series data 
+aggregated over time intervals.  Bars typically contain a price at the beginning
+of the interval called the opening price, a price at the end of the interval 
+known as the closing price, high and low prices attained during the interval, 
+and volume of shares traded during the interval.  Here is the definition 
+of "bar" at <a href="http://www.investopedia.com/terms/b/bar.asp" target="_blank">Investopedia</a>).</p>
+
+<p>The stock must be a valid symbol trading on NYSE or NASDAQ.  If an invalid symbol is given, the application should display a message to the effect that no data was returned.  Alternately if the symbol trades very lightly or has
+non-standard trading times, the application should display a message to the 
+effect that some data was missing.</p>
+
+<p>Pro tips: </p>
+<ui>
+  <li>This is hooked up to a live feed.  Be patient and allow data to load.  Do not bang on the buttons like the world is ending tomorrow.</li>
+  <li>If something goes awry, keep calm, try closing the browser window and reloading.</li>
+  <li>Some example stocks to try: GOOG, AAPL, XOM, T, P.</li>
+</ui>
+
+<h4>Output</h4>
+
+<h4>Price/Volume Tab</h4>
+
+<p>The top plot shows daily price movements tracked in minutes after the standard
+9:30 US/Eastern open.  Tool tips displaying point data are available by mousing
+over selected data points in the plot.  Data from a particular day can be 
+excluded by clicking on that day in the legend, while data from a particular day can be shown exclusively by double-clicking on that day.</p>
+
+<p>The bottom plot shows daily volume tracked in minutes after the standard 9:30 US/Eastern open.  Tool tips displaying point data are available by mousing
+over selected regions in the bar plot.  Data from a particular day can be 
+excluded by clicking on that day in the legend, while data from a particular day can be shown exclusively by double-clicking on that day.</p>
+
+<p>An additional option for this tab controls whether the prices/volumes are displayed as-is, or are expressed in % change from the opening period.</p>
+
+<h4>Correlations Tab</h4>
+
+<p>The top plot shows two correlation profiles.  The profile on the left
+("Fixed") shows the correlation of the price movement of the reference bar
+period with each other bar period in a trading day.  For example, when the 
+reference bar is chosen to be the opening bar, the "fixed" plot is showing the 
+correlation of the opening price movement with subsequent price movements through the day.</p>
+
+<p>The plot on the right ("Rolling") shows the correlation of price movement in
+the reference bar with the cumulative price movement at each point during the 
+day. For example, when the reference bar is chosen to be the opening bar, the "rolling" plot is showing the correlation of the opening price movement with the overall cumulative price movement through the day.</p>
+
+<p>An additional option for this tab allows the user to choose the reference 
+bar, and explore how the correlation profiles change as the reference bar is 
+varied.</p>
+

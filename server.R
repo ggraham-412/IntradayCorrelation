@@ -1,10 +1,9 @@
-library(shiny)
 
 shinyServer(function(input, output, session) {
    
     df_all <- reactive({
       barInterval <- as.numeric(input$ddlBarInterval)
-      raw <- gf_getdata(input$txtSym, input$numDays, barInterval)
+      raw <- gf_getdata(input$txtSym, as.numeric(input$numDays)+1, barInterval)
       validate(
         need(!(is.na(raw)[1]), "No data was returned.  Please check that the symbol is a correct NYSE or NASDAQ symbol with normal opening and closing times.")
       )
