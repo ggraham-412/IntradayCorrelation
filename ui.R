@@ -60,8 +60,6 @@ shinyUI(pageWithSidebar(
                            value=defaultIntervalMin, 
                            step = defaultIntervalMin),
                
-               h3("Correlation of Initial Price Move with Later Price Moves"),
-               
                plotOutput("correlation"),
                
                uiOutput("CorrelationTableTitle"),

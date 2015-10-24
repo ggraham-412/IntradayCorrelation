@@ -5,7 +5,7 @@ source("intraday.R")
 #  UI Defaults
 ################
 
-intervalChoices <- list("5 min" = 300, "15 min" = 900, "30 min" = 1800)
+intervalChoices <- list("10 min" = 600, "15 min" = 900, "30 min" = 1800)
 minDays <- 1
 maxDays <- 28
 
