@@ -159,6 +159,31 @@ gf_prepdata <- function(df, interval) {
   rbind(dfp, mtmp[,c("DAY","PERIOD","variable","value")])
 }
 
+# Filters the main dataset for specific data
+gf_filterdata <- function(df, what, option="") {
+  tmp <- df %>% filter(variable==what)
+  if ( option == "%-change" ) {
+      tmp <- gf_normdata(tmp)
+  }
+  tmp
+}
+
+# For each day, divides data in subsequent periods by 
+# data in the first period
+gf_normdata <- function(df) {
+  ltmp <- split(df, df$DAY)  
+  ctmp <- NA
+  for ( l in ltmp ) { 
+    l$value <- l$value / l$value[1]
+    if ( is.na(ctmp)[1] ) {
+      ctmp<-l
+    } else {
+      ctmp <- rbind(ctmp,l)
+    }
+  }
+  ctmp
+}
+
 # casts a melted gf data frame, desired data vs DAY (orient=0) or PERIOD (orient=1)
 gf_castdata <- function(df, what, orient=0) {
   if (orient==0) {
