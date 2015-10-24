@@ -3,6 +3,12 @@ library(dplyr)
 library(lubridate)
 library(rCharts)
 
+###############
+#  Constants
+###############
+outputChoice_pctChange <- "%-change"
+outputChoice_raw <- "Raw"
+
 #################
 # Utilities
 #################
@@ -235,7 +241,7 @@ gf_volumeChart <- function(vol, option="") {
   n1 <- nPlot(data=vol, 
               x="PERIOD", y="value", group="DAY", 
               type="multiBarChart")
-  if ( option == "%-change" ) {
+  if ( option == outputChoice_pctChange ) {
     n1$yAxis(tickFormat = "#! d3.format(',.3f') !#") 
   } else {
     n1$yAxis(tickFormat = "#! d3.format(',.0f') !#") 

@@ -24,8 +24,14 @@ shinyServer(function(input, output, session) {
     
     df_diff <- reactive({
       tmp <- df_all()
-      refcol <- min(as.numeric(input$corrRefPoint), length(unique(tmp$PERIOD)))
+      barIntervalMin <- as.numeric(input$ddlBarInterval) / 60
+      tmpRefCol <- (as.numeric(input$corrRefPoint)) / barIntervalMin
+      refcol <- min(tmpRefCol + 1, length(unique(tmp$PERIOD)))
       gf_correlationData(tmp, refcol)
+    })
+    
+    output$PriceVolumeTitle <- renderUI({
+      h2(paste("Daily Overlaid Prices and Volumes for",input$txtSym))
     })
     
     output$priceChart <- renderChart2({
@@ -38,15 +44,26 @@ shinyServer(function(input, output, session) {
        gf_volumeChart(vol, input$ddlOutput)
      })
      
-    output$correlation <- renderPlot({
+     output$CorrelationTitle <- renderUI({
+       h2(paste("Daily Intraday Correlations for",input$txtSym))
+     })
+     
+     output$correlation <- renderPlot({
       gf_correlationPlots(df_diff())
     })
     
     output$corrdata <- renderTable({df_diff()})
     
     observe({
-      maxnum <- nrow(df_diff())
+      tmp <- df_diff()
+      maxnum <- max(tmp$Minute)
       selected <- min(as.numeric(input$corrRefPoint), maxnum)
-      updateSliderInput(session, "corrRefPoint", min=2, max = maxnum, step=1, value=selected)
+      barInterval <- as.numeric(input$ddlBarInterval) / 60
+      updateSliderInput(session, 
+                        "corrRefPoint", 
+                        min=barInterval, 
+                        max = maxnum, 
+                        step=barInterval, 
+                        value=selected)
     })
 })

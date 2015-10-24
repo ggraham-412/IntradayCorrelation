@@ -7,20 +7,20 @@ shinyUI(pageWithSidebar(
     # Choose stock symbol            
     textInput("txtSym", 
               label="Symbol", 
-              value = "GOOG"),
+              value = defaultSymbol),
 
     # Choose number of days to analyze
     numericInput("numDays", 
                  "Days", 
-                 12, 
-                 min=1, 
-                 max=28),
+                 defaultDays, 
+                 min=minDays, 
+                 max=maxDays),
     
     # Choose the width of the reported price bars
     selectInput("ddlBarInterval", 
                 "Interval", 
-                selected = 900,
-                choices=list("5 min" = 300, "15 min" = 900, "30 min" = 1800))
+                selected = defaultIntervalSec,
+                choices = intervalChoices)
   ),
   
   mainPanel(
@@ -28,12 +28,13 @@ shinyUI(pageWithSidebar(
       
       tabPanel("Price/Volume",
                
-        h2("Daily Overlaid Prices and Volumes"),
-        
+        uiOutput("PriceVolumeTitle"),
+               
         # Additional input to affect display
         selectInput("ddlOutput", 
                     "Output Option", 
-                    choices=list("Raw", "%-change"), 
+                    choices=defaultOutputChoices, 
+                    selected = defaultOutputChoice,
                     width=180),
         
         h3("Daily Overlaid Prices"),
@@ -47,21 +48,21 @@ shinyUI(pageWithSidebar(
       
       tabPanel("Correlations",
                
-               h2("Daily Correlations"),
+               uiOutput("CorrelationTitle"),
                
                # Additional option to choose reference point
                sliderInput("corrRefPoint", 
                            "Correleation Reference Point", 
-                           min=2, 
-                           max=3, 
-                           value=2, 
-                           step = 1),
+                           min=defaultIntervalMin, 
+                           max=(2*defaultIntervalMin), 
+                           value=defaultIntervalMin, 
+                           step = defaultIntervalMin),
                
                h3("Correlation of Initial Price Move with Later Price Moves"),
                
                plotOutput("correlation"),
                
-               h3("Correlation Data Table"),
+               h3("Correlation Data Table for the above Plots"),
                
                tableOutput("corrdata")
       ),
