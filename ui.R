@@ -8,6 +8,8 @@ shinyUI(pageWithSidebar(
     textInput("txtSym", 
               label="Symbol", 
               value = defaultSymbol),
+    
+    h6("(eg- 'GOOG', 'XOM', 'T', etc.)"),
 
     # Choose number of days to analyze
     numericInput("numDays", 
@@ -62,7 +64,7 @@ shinyUI(pageWithSidebar(
                
                plotOutput("correlation"),
                
-               h3("Correlation Data Table for the above Plots"),
+               uiOutput("CorrelationTableTitle"),
                
                tableOutput("corrdata")
       ),

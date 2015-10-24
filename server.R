@@ -47,6 +47,10 @@ shinyServer(function(input, output, session) {
      output$CorrelationTitle <- renderUI({
        h2(paste("Daily Intraday Correlations for",input$txtSym))
      })
+
+     output$CorrelationTableTitle <- renderUI({
+       h3(paste("Daily Intraday Correlations relative to",input$corrRefPoint, "minutes."))
+     })
      
      output$correlation <- renderPlot({
       gf_correlationPlots(df_diff())
